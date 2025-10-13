@@ -1,20 +1,14 @@
-"use client";
-
-export default function MarketRisk() {
-  const probability = 68; // hardcoded dummy data
-
+export default function MarketGauge({ risk }: { risk: number }) {
   return (
-    <div className="bg-white text-black rounded-2xl p-6 shadow-md">
-      <h2 className="text-xl font-bold mb-2">Market Risk</h2>
-      <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+    <div className="bg-gray-800 p-6 rounded-2xl text-white">
+      <h2 className="text-xl font-bold mb-4">Market Risk</h2>
+      <div className="w-full bg-gray-600 rounded-full h-4 mb-2">
         <div
-          className="h-full bg-red-500 transition-all"
-          style={{ width: `${probability}%` }}
+          className={`h-4 rounded-full ${risk > 60 ? "bg-red-500" : "bg-yellow-400"}`}
+          style={{ width: `${risk}%` }}
         ></div>
       </div>
-      <p className="text-center mt-2 text-lg font-semibold">
-        {probability}% Risk
-      </p>
+      <p>{risk}% chance of market correction</p>
     </div>
   );
 }
