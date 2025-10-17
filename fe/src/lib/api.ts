@@ -1,50 +1,20 @@
-import axios from "axios";
-
-const BASE = "https://financialmodelingprep.com/stable";
-const KEY = process.env.NEXT_PUBLIC_FMP_API_KEY;
+const BASE = "http://localhost:8000"; // your FastAPI backend URL
 
 export async function getStockQuote(symbol: string) {
-  const url = `${BASE}/quote?symbol=${symbol}&apikey=${KEY}`;
-  const res = await axios.get(url);
-  if (!res.data || res.data.length === 0) {
-    throw new Error("No quote data");
-  }
-  return res.data[0];
+  const res = await fetch(`${BASE}/stock/quote/${symbol}`);
+  if (!res.ok) throw new Error("No quote data");
+  return res.json();
 }
 
 export async function getIntrinsicValue(symbol: string) {
-  const url = `${BASE}/discounted-cash-flow?symbol=${symbol}&apikey=${KEY}`;
-  const res = await axios.get(url);
-  if (!res.data || res.data.length === 0) {
-    throw new Error("No DCF data");
-  }
-  return res.data[0];
+  const res = await fetch(`${BASE}/stock/dcf/${symbol}`);
+  if (!res.ok) throw new Error("No DCF data");
+  return res.json();
 }
 
 export async function getMarketMetrics() {
-  try {
-    const [vixRes, spRes] = await Promise.all([
-      axios.get(`${BASE}/quote?symbol=%5EVIX&apikey=${KEY}`),
-      axios.get(`${BASE}/quote?symbol=%5EGSPC&apikey=${KEY}`),
-    ]);
-    const vix = vixRes.data?.[0]?.price;
-    const sp500 = spRes.data?.[0]?.price;
-
-    return {
-      vix: vix ?? null,
-      sp500: sp500 ?? null,
-      buffettIndex: 185,
-      cape: 31.5,
-      yieldSpread: -0.4,
-    };
-  } catch (err) {
-    console.error("Error fetching market metrics (stable):", err);
-    return {
-      vix: 22,
-      sp500: 4800,
-      buffettIndex: 185,
-      cape: 31.5,
-      yieldSpread: -0.4,
-    };
-  }
+  const res = await fetch(`${BASE}/market/metrics`);
+  if (!res.ok) throw new Error("Failed to fetch market metrics");
+  return res.json();
 }
+
