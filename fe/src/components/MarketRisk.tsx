@@ -1,4 +1,4 @@
-export default function MarketGauge({ risk }: { risk: number }) {
+export default function MarketRisk({ risk }: { risk: number }) {
   return (
     <div className="bg-gray-800 p-6 rounded-2xl text-white">
       <h2 className="text-xl font-bold mb-4">Market Risk</h2>

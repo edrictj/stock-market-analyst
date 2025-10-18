@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import StockSearch from "./StockSearch";
-import MarketGauge from "./MarketRisk";
+import MarketRisk from "./MarketRisk";
 import MetricCard from "./MetricCard";
 import MarketChart from "./MarketChart";
 import { getMarketMetrics } from "@/lib/api";
@@ -63,7 +63,7 @@ export default function Tabs() {
           <p>Loading market data...</p>
         ) : metrics ? (
           <div className="grid md:grid-cols-2 gap-6">
-            <MarketGauge risk={calculateCrashRisk(metrics)} />
+            <MarketRisk risk={metrics.crashProbability} />
             <div className="grid grid-cols-2 gap-4">
               <MetricCard
                 label="Buffett Indicator"
@@ -84,17 +84,4 @@ export default function Tabs() {
       </div>
     </div>
   );
-}
-
-/**
- * Simple crash risk calculator based on metrics.
- * You can tweak weights or add more conditions later.
- */
-function calculateCrashRisk(metrics: any) {
-  let score = 0;
-  if (metrics.vix > 20) score += 25; // market volatility
-  if (metrics.buffettIndex > 170) score += 25; // overvaluation
-  if (metrics.cape > 30) score += 25; // overvaluation long-term
-  if (metrics.yieldSpread < 0) score += 25; // inverted yield curve
-  return Math.min(100, score);
 }

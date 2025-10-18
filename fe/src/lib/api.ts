@@ -18,3 +18,9 @@ export async function getMarketMetrics() {
   return res.json();
 }
 
+export async function getSp500() {
+  const res = await fetch(`${BASE}/sp500`);
+  if (!res.ok) throw new Error("Failed to fetch S&P 500 data");
+  return res.json();
+}
+
