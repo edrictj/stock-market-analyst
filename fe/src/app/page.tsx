@@ -1,10 +1,5 @@
-import Layout from "@/components/Layout";
-import Tabs from "@/components/Tabs";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <Layout>
-      <Tabs />
-    </Layout>
-  );
+export default function HomePage() {
+  redirect("/dashboard");
 }
