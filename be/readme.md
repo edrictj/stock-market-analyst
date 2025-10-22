@@ -12,18 +12,26 @@ It can serve data to a frontend dashboard (e.g., Next.js or React).
 - Simple deployment-ready structure
 
 Step 1: Create a virtual env
+```bash
 python -m venv venv
 source venv/bin/activate      # macOS/Linux
 venv\Scripts\activate         # Windows
+```
 
 Step 2: Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
 Step 3: Create .env file
+```bash
 API_KEY=your_api_key_here
+```
 
 Step 4: Run the app
+```bash
 uvicorn main:app --reload
+```
 
 By default, the API runs at:
 http://127.0.0.1:8000
